@@ -7,12 +7,34 @@ import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { AlertCircle, Phone, HeartHandshake, Brain, Frown, Smile } from "lucide-react"
 import { FlipWords } from "@/components/ui/flip-words";
+import { MaskContainer } from "@/components/ui/svg-mask-effect";
 
 export default function Home() {
   const [showHelpline, setShowHelpline] = useState(false)
   const words: string[] = ["METH", "ICE", "WEED"];
   return (
+    
     <div>
+      <div className="h-[40rem] w-full flex items-center justify-center  overflow-hidden">
+      <MaskContainer
+        revealText={
+          <p className="max-w-4xl mx-auto text-slate-800 text-center  text-4xl font-bold">
+            Drugs are cool! They make you feel amazing.<br></br><br></br>
+            Just one try won’t hurt, what’s the risk?<br></br><br></br>
+            They take all your pain away.<br></br><br></br>
+            Everyone’s doing it, so why not join in?<br></br><br></br>
+            They help you escape stress and feel unstoppable. <br></br>
+          </p>
+        }
+        className="h-[40rem] border rounded-md"
+      >
+        Drugs create <span className="text-red-500">addiction</span>, not relief.<br></br><br></br>
+        One try can <span className="text-red-500">ruin</span> your life.<br></br><br></br>
+        They mask pain but leave <span className="text-red-500">lasting damage</span>.<br></br><br></br>
+        Relationships and health are <span className="text-red-500">destroyed</span>.<br></br><br></br>
+        What feels like escape becomes a <span className="text-red-500">trap</span><br></br>
+      </MaskContainer>
+    </div>
       <div className="bg-no-repeat bg-fixed bg-cover bg-[url('/nodrug.jpg')]">
       <div className="flex flex-col justify-center h-dvh ">
 
