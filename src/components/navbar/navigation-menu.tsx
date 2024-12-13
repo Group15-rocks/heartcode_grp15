@@ -37,27 +37,27 @@ function Navbar({ className }: { className?: string }) {
             <ProductItem
               title="HOW TO HELP"
               href="/quiz_how_to"
-              src="/assets/how.jpg"
+              src="/how.jpg"
               description="Prepare for tech interviews like never before."
             />
             <ProductItem
               title="COMMON SUBSTANCE ABUSE"
               href="/quiz_common"
-              src="/public/how.jpg"
+              src="/common.png"
               description="Production ready Tailwind css components for your next project"
             />
             <ProductItem
               title="HEALTHY ALTERNATIVES DESTRESS"
               href="/quiz_healthy"
-              src="/quiz_healthy"
+              src="/healthy.jpg"
               description="Never write from scratch again. Go from idea to blog in minutes."
             />
           </div>
         </MenuItem>
         <MenuItem setActive={setActive} active={active} item="ABOUT">
           <div className="flex flex-col space-y-4 text-sm">
-            <HoveredLink href="/about-me">Eugeue</HoveredLink>
-            <HoveredLink href="/about-me">Yee Xian</HoveredLink>
+            <HoveredLink href="/about-me_eugeue">Eugene</HoveredLink>
+            <HoveredLink href="/about-me_yeexian">Yee Xian</HoveredLink>
 
           </div>
         </MenuItem>
