@@ -7,11 +7,13 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { Progress } from "@/components/ui/progress"
 import { AlertCircle, CheckCircle, HelpingHand, Pill, Activity } from "lucide-react"
+import { motion } from "framer-motion";
+import { LampContainer } from "@/components/ui/lamp";
 
 const quizThemes = [
   {
     id: "help",
-    title: "How to Help Someone Suffering",
+    title: "How to Help ",
     icon: HelpingHand,
     questions: [
       {
@@ -346,7 +348,19 @@ export default function ThematicSubstanceAbuseQuiz() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-no-repeat bg-fixed bg-cover bg-[url('/quizbg.jpg')] p-5">
+    <LampContainer>
+      <motion.h1
+        initial={{ opacity: 0.5, y: 100 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{
+          delay: 0.3,
+          duration: 0.8,
+          ease: "easeInOut",
+        }}
+        className="mt-8 bg-gradient-to-br py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-2xl"
+      >
+       <br />
+
       <div className="w-full max-w-3xl">
         <Card className="backdrop-blur-sm bg-white/80 shadow-xl">
           <CardHeader className="relative">
@@ -363,7 +377,7 @@ export default function ThematicSubstanceAbuseQuiz() {
             {selectedTheme && (
               quizCompleted ? (
                 <div className="space-x-4">
-                  <Button onClick={() => setSelectedTheme(null)} variant="outline">Choose Another Theme</Button>
+                  <Button onClick={() => "/quiz"} variant="outline">Choose Another Theme</Button>
                   <Button onClick={resetQuiz}>Retake This Quiz</Button>
                 </div>
               ) : (
@@ -376,7 +390,8 @@ export default function ThematicSubstanceAbuseQuiz() {
             )}
           </CardFooter>
         </Card>
-      </div>
-    </div>
+        </div>
+      </motion.h1>
+      </LampContainer>
   )
 }

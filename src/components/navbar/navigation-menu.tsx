@@ -28,8 +28,8 @@ function Navbar({ className }: { className?: string }) {
       <Menu setActive={setActive}>
         <MenuItem setActive={setActive} active={active} item="HOME">
           <div className="flex flex-col space-y-4 text-sm">
-            <HoveredLink href="/">INTRODUCTION</HoveredLink>
-            <HoveredLink href="/">REASON</HoveredLink>
+            <HoveredLink href="/">HOME</HoveredLink>
+
           </div>
         </MenuItem>
         <MenuItem setActive={setActive} active={active} item="QUIZ">
@@ -38,19 +38,19 @@ function Navbar({ className }: { className?: string }) {
               title="HOW TO HELP"
               href="/quiz_how_to"
               src="/how.jpg"
-              description="Prepare for tech interviews like never before."
+              description="Learn about how to help others."
             />
             <ProductItem
               title="COMMON SUBSTANCE ABUSE"
               href="/quiz_common"
               src="/common.png"
-              description="Production ready Tailwind css components for your next project"
+              description="Learn the effects of common drugs."
             />
             <ProductItem
               title="HEALTHY ALTERNATIVES DESTRESS"
               href="/quiz_healthy"
               src="/healthy.jpg"
-              description="Never write from scratch again. Go from idea to blog in minutes."
+              description="Other methods to relieve stress."
             />
           </div>
         </MenuItem>

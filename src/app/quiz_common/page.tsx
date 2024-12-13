@@ -7,80 +7,76 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { Progress } from "@/components/ui/progress"
 import { AlertCircle, CheckCircle, HelpingHand, Pill, Activity } from "lucide-react"
-
+import { motion } from "framer-motion";
+import { LampContainer } from "@/components/ui/lamp";
 const quizThemes = [
   {
-    id: "help",
-    title: "How to Help Someone Suffering",
-    icon: HelpingHand,
+    id: "common-drugs",
+    title: "Common substance abuse and effects",
+    icon: Pill,
     questions: [
       {
-        question: "What's the first step in helping someone with substance abuse?",
+        question: "Which of these is NOT a common type of abused substance in Singapore?",
         options: [
-          "Ignore the problem",
-          "Confront them aggressively",
-          "Show support and express concern",
-          "Tell all their friends and family"
-        ],
-        correctAnswer: 2
-      },
-      {
-        question: "Which approach is NOT recommended when talking to someone about their substance abuse?",
-        options: [
-          "Being judgmental and critical",
-          "Listening without interrupting",
-          "Offering specific examples of your concerns",
-          "Suggesting professional help"
-        ],
-        correctAnswer: 0
-      },
-      {
-        question: "What should you do if someone refuses help for their substance abuse?",
-        options: [
-          "Force them into treatment",
-          "Give up and walk away",
-          "Continue to offer support and resources",
-          "Threaten to cut ties with them"
-        ],
-        correctAnswer: 2
-      },
-      {
-        question: "Which is a good way to support someone in recovery?",
-        options: [
-          "Constantly check up on them",
-          "Encourage them to stay busy with work",
-          "Offer to attend support meetings with them",
-          "Tell them to just stay strong"
-        ],
-        correctAnswer: 2
-      },
-      {
-        question: "What are the avenue(s) for help in Singapore?",
-        options: [
-          "National Addictions Management Service (NAMS)",
-          "Singapore Anti-Narcotics Association (SANA)t",
-          "We Care Community Services",
-          "Alcoholics Anonymous Singapore",
-		  "Narcotics Anonymous Singapore",
-          "All of the above"
+          "Alcohol",
+		  "Methamphetamine (Ice)",
+		  "Heroin",
+		  "Cannabis",
+		  "New Psychoactive Substances (NPS)",
+          "Broccoli"
         ],
         correctAnswer: 5
-		},
-		{
-			question: "What is NAMS Helpline?",
-			options: [
-			  "6732 6837",
-			  "6514 2037",
-			  "6138 0397",
-			  "6632 4717",
-			  "None of the above"
-			],
-			correctAnswer: 0
-			}
+      },
+      {
+        question: "In Singapore, death penalty for people convicted of trafficking more than?",
+        options: [
+          "5 grams of heroin",
+          "20 grams of cocaine",
+          "200 grams of meth",
+          "500 grams of cannabis"
+        ],
+        correctAnswer: 3
+      },
+      {
+        question: "Why should you avoid drugs?",
+        options: [
+          "Health risks",
+          "Legal consequences",
+          "Social impact",
+          "Financial burden",
+		  "Career implications",
+		  "Quality of life",
+		  "All of the above",
+        ],
+        correctAnswer: 6
+      },
+      {
+        question: "What is a common short-term effect of Cannabis use?",
+        options: [
+          "Increased energy",
+          "Improved memory",
+          "Altered sense of time",
+          "Better decision-making"
+        ],
+        correctAnswer: 2
+      },
+      {
+        question: "Which of these is a prescription drug that's commonly abused?",
+        options: [
+			"Nausea", 
+			"Vomiting", 
+			"Constipation", 
+			"Pruritus", 
+			"Dizziness", 
+			"Dry mouth", 
+			"Sedation",
+			"All of the above",
+		  ],
+        correctAnswer: 7
+      }
     ]
-  
-  }  ]
-  
+  }
+]
 
 
 export default function ThematicSubstanceAbuseQuiz() {
@@ -143,7 +139,7 @@ export default function ThematicSubstanceAbuseQuiz() {
   }
 
   const renderThemeSelection = () => (
-    <div className="justify-center h-40 text-center">
+    <div className="">
       {quizThemes.map((theme) => (
         <Button
           key={theme.id}
@@ -151,10 +147,10 @@ export default function ThematicSubstanceAbuseQuiz() {
           className="flex flex-col items-center justify-center h-40 text-center"
           variant="outline"
         >
-          <theme.icon className="w-8 h-8 mb-2" />
+          <theme.icon className="w-8 h-8 mb-2 items-center" />
           <span className="font-semibold">{theme.title}</span>
           {previousScores[theme.id] !== undefined && (
-            <span className="text-sm mt-2">
+            <span className="text-sm mt-2 items-center">
               Previous Score: {previousScores[theme.id]}/{quizThemes.find(t => t.id === theme.id)?.questions.length}
             </span>
           )}
@@ -170,7 +166,7 @@ export default function ThematicSubstanceAbuseQuiz() {
     return (
       <>
         <Progress value={(currentQuestion + 1) / currentTheme.questions.length * 100} className="mb-4" />
-        <h2 className="text-xl font-semibold mb-4">Question {currentQuestion + 1} of {currentTheme.questions.length}</h2>
+        <h2 className="inset-0 bottom-0 text-xl font-semibold mb-4">Question {currentQuestion + 1} of {currentTheme.questions.length}</h2>
         <p className="mb-4">{currentTheme.questions[currentQuestion].question}</p>
         <RadioGroup onValueChange={(value) => handleAnswerSelection(parseInt(value))} value={selectedAnswer?.toString()}>
           {currentTheme.questions[currentQuestion].options.map((option, index) => (
@@ -181,12 +177,12 @@ export default function ThematicSubstanceAbuseQuiz() {
           ))}
         </RadioGroup>
         {!showFeedback && (
-          <Button onClick={handleSubmitAnswer} disabled={selectedAnswer === null} className="mt-4">
+          <Button onClick={handleSubmitAnswer} disabled={selectedAnswer === null} className="mt-4 items-center">
             Submit Answer
           </Button>
         )}
         {showFeedback && (
-          <div className={`mt-4 p-4 rounded-md ${selectedAnswer === currentTheme.questions[currentQuestion].correctAnswer ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+          <div className={`mt-4 p-4 rounded-md items-center ${selectedAnswer === currentTheme.questions[currentQuestion].correctAnswer ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
             {selectedAnswer === currentTheme.questions[currentQuestion].correctAnswer ? (
               <div className="flex items-center">
                 <CheckCircle className="mr-2" />
@@ -209,7 +205,7 @@ export default function ThematicSubstanceAbuseQuiz() {
     if (!currentTheme) return null
 
     return (
-      <div className="text-center">
+      <div className="inset-0 bottom-0 text-center">
         <h2 className="text-2xl font-bold mb-4">Quiz Completed!</h2>
         <p className="text-xl mb-4">Your score: {score} out of {currentTheme.questions.length}</p>
         <Progress value={score / currentTheme.questions.length * 100} className="mb-4" />
@@ -225,20 +221,32 @@ export default function ThematicSubstanceAbuseQuiz() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-no-repeat bg-fixed bg-cover bg-[url('/quizbg.jpg')] p-5">
-      <div className="w-full max-w-3xl">
-        <Card className="backdrop-blur-sm bg-white/80 shadow-xl">
-          <CardHeader className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-t-lg" />
-            <CardTitle className="text-3xl font-bold text-center text-white relative z-10">Common Substance Abuse</CardTitle>
-            <CardDescription className="text-center text-white relative z-10">Test your knowledge</CardDescription>
+    <LampContainer>
+      <motion.h1
+        initial={{ opacity: 0.5, y: 100 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{
+          delay: 0.3,
+          duration: 0.8,
+          ease: "easeInOut",
+        }}
+        className="mt-3 items-center bg-gradient-to-br py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-1x2"
+      >
+      <br />
+
+      <div className="max-w-2xl items-center">
+        <Card className="backdrop-blur-sm bg-white/80 shadow-xl items-center">
+          <CardHeader className="relative items-center">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-t-lg items-center" />
+            <CardTitle className="text-3x1 font-bold text-center items-center text-white relative z-10">Common Drugs Abuse</CardTitle>
+            <CardDescription className="text-center items-center text-white relative z-10">Test your knowledge</CardDescription>
           </CardHeader>
-          <CardContent className="relative z-10">
+          <CardContent className="relative z-10 items-center">
             {!selectedTheme && renderThemeSelection()}
             {selectedTheme && !quizCompleted && renderQuiz()}
             {quizCompleted && renderQuizCompleted()}
           </CardContent>
-          <CardFooter className="flex justify-center relative z-10">
+          <CardFooter className="flex justify-center relative z-10 items-center">
             {selectedTheme && (
               quizCompleted ? (
                 <div className="space-x-4">
@@ -256,6 +264,7 @@ export default function ThematicSubstanceAbuseQuiz() {
           </CardFooter>
         </Card>
       </div>
-    </div>
+      </motion.h1>
+      </LampContainer>    
   )
 }

@@ -7,6 +7,8 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { Progress } from "@/components/ui/progress"
 import { AlertCircle, CheckCircle, HelpingHand, Pill, Activity } from "lucide-react"
+import { motion } from "framer-motion";
+import { LampContainer } from "@/components/ui/lamp";
 
 const quizThemes = [
   {
@@ -78,63 +80,6 @@ const quizThemes = [
 			correctAnswer: 0
 			}
     ]
-  },
-  {
-    id: "alternatives",
-    title: "Healthy Alternatives to Drug Use",
-    icon: Activity,
-    questions: [
-      {
-        question: "Which of these is a healthy way to manage stress instead of using drugs?",
-        options: [
-          "Binge-watching TV",
-          "Regular exercise",
-          "Isolating yourself",
-          "Eating junk food"
-        ],
-        correctAnswer: 1
-      },
-      {
-        question: "What's a good alternative to using drugs for socializing?",
-        options: [
-          "Staying home alone",
-          "Joining a sports team or club",
-          "Sleeping all day",
-          "Spending all your time online"
-        ],
-        correctAnswer: 1
-      },
-      {
-        question: "Which activity can help improve mood naturally?",
-        options: [
-          "Complaining to friends",
-          "Spending time in nature",
-          "Watching violent movies",
-          "Eating lots of sugar"
-        ],
-        correctAnswer: 1
-      },
-      {
-        question: "What's a healthy way to deal with emotional pain?",
-        options: [
-          "Using drugs to numb the pain",
-          "Ignoring your feelings",
-          "Talking to a therapist or counselor",
-          "Getting into arguments"
-        ],
-        correctAnswer: 2
-      },
-      {
-        question: "Which of these is a positive way to find excitement in life?",
-        options: [
-          "Taking risks with illegal substances",
-          "Learning a new skill or hobby",
-          "Shoplifting for an adrenaline rush",
-          "Picking fights with strangers"
-        ],
-        correctAnswer: 1
-      }
-    ]
   }
 ]
 
@@ -198,7 +143,7 @@ export default function ThematicSubstanceAbuseQuiz() {
   }
 
   const renderThemeSelection = () => (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div className="">
       {quizThemes.map((theme) => (
         <Button
           key={theme.id}
@@ -206,10 +151,10 @@ export default function ThematicSubstanceAbuseQuiz() {
           className="flex flex-col items-center justify-center h-40 text-center"
           variant="outline"
         >
-          <theme.icon className="w-8 h-8 mb-2" />
+          <theme.icon className="w-8 h-8 mb-2 items-center" />
           <span className="font-semibold">{theme.title}</span>
           {previousScores[theme.id] !== undefined && (
-            <span className="text-sm mt-2">
+            <span className="text-sm mt-2 items-center">
               Previous Score: {previousScores[theme.id]}/{quizThemes.find(t => t.id === theme.id)?.questions.length}
             </span>
           )}
@@ -225,7 +170,7 @@ export default function ThematicSubstanceAbuseQuiz() {
     return (
       <>
         <Progress value={(currentQuestion + 1) / currentTheme.questions.length * 100} className="mb-4" />
-        <h2 className="text-xl font-semibold mb-4">Question {currentQuestion + 1} of {currentTheme.questions.length}</h2>
+        <h2 className="inset-0 bottom-0 text-xl font-semibold mb-4">Question {currentQuestion + 1} of {currentTheme.questions.length}</h2>
         <p className="mb-4">{currentTheme.questions[currentQuestion].question}</p>
         <RadioGroup onValueChange={(value) => handleAnswerSelection(parseInt(value))} value={selectedAnswer?.toString()}>
           {currentTheme.questions[currentQuestion].options.map((option, index) => (
@@ -236,12 +181,12 @@ export default function ThematicSubstanceAbuseQuiz() {
           ))}
         </RadioGroup>
         {!showFeedback && (
-          <Button onClick={handleSubmitAnswer} disabled={selectedAnswer === null} className="mt-4">
+          <Button onClick={handleSubmitAnswer} disabled={selectedAnswer === null} className="mt-4 items-center">
             Submit Answer
           </Button>
         )}
         {showFeedback && (
-          <div className={`mt-4 p-4 rounded-md ${selectedAnswer === currentTheme.questions[currentQuestion].correctAnswer ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+          <div className={`mt-4 p-4 rounded-md items-center ${selectedAnswer === currentTheme.questions[currentQuestion].correctAnswer ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
             {selectedAnswer === currentTheme.questions[currentQuestion].correctAnswer ? (
               <div className="flex items-center">
                 <CheckCircle className="mr-2" />
@@ -264,7 +209,7 @@ export default function ThematicSubstanceAbuseQuiz() {
     if (!currentTheme) return null
 
     return (
-      <div className="text-center">
+      <div className="inset-0 bottom-0 text-center">
         <h2 className="text-2xl font-bold mb-4">Quiz Completed!</h2>
         <p className="text-xl mb-4">Your score: {score} out of {currentTheme.questions.length}</p>
         <Progress value={score / currentTheme.questions.length * 100} className="mb-4" />
@@ -280,24 +225,36 @@ export default function ThematicSubstanceAbuseQuiz() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-no-repeat bg-fixed bg-cover bg-[url('/quizbg.jpg')] p-5">
-      <div className="w-full max-w-3xl">
-        <Card className="backdrop-blur-sm bg-white/80 shadow-xl">
-          <CardHeader className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-t-lg" />
-            <CardTitle className="text-3xl font-bold text-center text-white relative z-10">Substance Abuse Awareness Quiz</CardTitle>
-            <CardDescription className="text-center text-white relative z-10">Choose a theme to test your knowledge</CardDescription>
+    <LampContainer>
+      <motion.h1
+        initial={{ opacity: 0.5, y: 100 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{
+          delay: 0.3,
+          duration: 0.8,
+          ease: "easeInOut",
+        }}
+        className="mt-3 items-center bg-gradient-to-br py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-1x2"
+      >
+      <br />
+
+      <div className="max-w-2xl items-center">
+        <Card className="backdrop-blur-sm bg-white/80 shadow-xl items-center">
+          <CardHeader className="relative items-center">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-t-lg items-center" />
+            <CardTitle className="text-3x' font-bold text-center items-center text-white relative z-10">How to help</CardTitle>
+            <CardDescription className="text-center items-center text-white relative z-10">Test your knowledge</CardDescription>
           </CardHeader>
-          <CardContent className="relative z-10">
+          <CardContent className="relative z-10 items-center">
             {!selectedTheme && renderThemeSelection()}
             {selectedTheme && !quizCompleted && renderQuiz()}
             {quizCompleted && renderQuizCompleted()}
           </CardContent>
-          <CardFooter className="flex justify-center relative z-10">
+          <CardFooter className="flex justify-center relative z-10 items-center">
             {selectedTheme && (
               quizCompleted ? (
                 <div className="space-x-4">
-                  <Button onClick={() => setSelectedTheme(null)} variant="outline">Choose Another Theme</Button>
+                  <a href="/quiz" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Choose Another Theme</a>
                   <Button onClick={resetQuiz}>Retake This Quiz</Button>
                 </div>
               ) : (
@@ -311,6 +268,7 @@ export default function ThematicSubstanceAbuseQuiz() {
           </CardFooter>
         </Card>
       </div>
-    </div>
+      </motion.h1>
+      </LampContainer>    
   )
 }
